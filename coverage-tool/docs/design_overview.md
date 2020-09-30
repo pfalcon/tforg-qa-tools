@@ -45,7 +45,7 @@ tfm_plat_get_rotpk_hash():
 
 The coverage tool relies on the generation of the execution trace from the target platform (in our case FVP). It relies on the coverage trace plugin which is an MTI based custom plugin that registers for trace source type `INST` and dumps a filtered set of instruction data that got executed during the coverage run. In case of silicon platforms it expects to use trace capture with tools like DSTREAM-ST.
 
-See [Coverage Plugin](./plugin_design.md) documentation to know more about this custom plugin.
+See [Coverage Plugin](./plugin_user_guided.md) documentation to know more about the use of this custom plugin.
 
 The following diagram shows an example trace capture output from the coverage trace plugin:
 ```

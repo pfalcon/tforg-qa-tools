@@ -34,6 +34,10 @@ Shell scripting guidelines - Follow Google's guidelines [Google Shell Scripting 
 C++ coding guidelines - Follow Google's guidelines [Google C++ Guideline](https://google.github.io/styleguide/cppguide.html)
 Python coding guidelines - Follow PEP 8 style guide [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/). We highly recommend the user of [Autopep8 tool](https://pypi.org/project/autopep8/) for the automatic formating of python code to be compliant with PEP 8 guidelines.
 
+##Change History
+
+Please refer to [changelog](./changelog.md) to see the history of changes in this project over released versions.
+
 ## License
 [BSD-3-Clause](./license.md)
 
