@@ -1,0 +1,82 @@
+{
+        "type" : "object",
+        "properties" : {
+            "api_version" : {
+                "type" : "string"
+            },
+            "metadata" : {
+                "type" : "object",
+                "properties" : {
+                    "metrics" : {
+                        "type" : "string"
+                    }
+                }
+            },
+            "data" : {
+                "type" : "array",
+                "minItems": 1,
+                "items" : {
+                    "type" : "object",
+                    "properties" :{
+                        "measurement" : {
+                            "type" : "string"
+                        },
+                        "fields" : {
+                            "type" : "object",
+                            "properties" : {
+                                "Latency_EL3Entry_EL3Exit" : {
+                                    "type" : "number"
+                                },
+                                "Latency_EL3Entry_CPUPowerDown" : {
+                                    "type" : "number"
+                                },
+                                "Latency_CPUWakeup_EL3Exit" : {
+                                    "type" : "number"
+                                },
+                                "CacheFlush" : {
+                                    "type" : "number"
+                                }
+                            },
+                            "oneOf": [
+                                { "required": [
+                                    "Latency_EL3Entry_EL3Exit"
+                                ]},
+                                { "required": [
+                                    "Latency_EL3Entry_CPUPowerDown",
+                                    "Latency_CPUWakeup_EL3Exit",
+                                    "CacheFlush"
+                                ]}
+                            ]
+                        },
+                        "tags" : {
+                            "type" : "object",
+                            "properties" : {
+                                "CommitID" : {
+                                    "type" : "string"
+                                },
+                                "CommitTitle" : {
+                                    "type" : "string"
+                                },
+                                "TC_Name" : {
+                                    "type" : "string"
+                                },
+                                "Cluster_ID" : {
+                                    "type" : "number"
+                                },
+                                "CPU_Core" : {
+                                    "type" : "number"
+                                }
+                            },
+                            "required" : ["CommitID", "CommitTitle", "TC_Name", "Cluster_ID", "CPU_Core"],
+                            "additionalProperties": false
+                        },
+                        "time" : {
+                        }
+                    }
+                },
+                "required" : ["measurement", "fields", "tags", "time"],
+                "additionalProperties": false
+            }
+        },
+        "required" : ["api_version", "metadata", "data"]
+}

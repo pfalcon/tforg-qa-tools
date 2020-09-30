@@ -1,0 +1,70 @@
+{
+    "type" : "object",
+    "properties" : {
+        "api_version" : {
+            "type" : "string"
+        },
+        "metadata" : {
+            "type" : "object",
+            "properties" : {
+                "metrics" : {
+                    "type" : "string"
+                }
+            }
+        },
+        "data" : {
+            "type" : "array",
+            "minItems": 1,
+            "items" : {
+                "type" : "object",
+                "properties" :{
+                    "measurement" : {
+                        "type" : "string"
+                    },
+                    "fields" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Function_ID" : {
+                                "type" : "string"
+                            },
+                            "Score" : {
+                                "type" : "number"
+                            },
+                            "Whitelisted" : {
+                                "type" : "string"
+                            },
+                            "Threshold" : {
+                                "type" : "number"
+                            }
+                        },
+                        "required" : ["Function_ID", "Score", "Whitelisted", "Threshold"]
+                    },
+                    "tags" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Git_Tag_Date" : {
+                                    "type" : "number"
+                            },
+                            "Base_Tag" : {
+                                "type" : "string"
+                            },
+                            "Target_Tag" : {
+                                "type" : "string"
+                            },
+                            "Location" : {
+                                "type" : "string"
+                            }
+                        },
+                        "required" : ["Git_Tag_Date", "Base_Tag", "Target_Tag", "Location"],
+                        "additionalProperties": false
+                    },
+                    "time" : {
+                    }
+                }
+            },
+            "required" : ["measurement", "fields", "tags", "time"],
+            "additionalProperties": false
+        }
+    },
+    "required" : ["api_version", "metadata", "data"]
+}

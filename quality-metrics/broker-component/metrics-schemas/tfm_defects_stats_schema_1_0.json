@@ -1,0 +1,65 @@
+{
+  "type" : "object",
+  "properties" : {
+      "api_version" : {
+          "type" : "string"
+      },
+      "metadata" : {
+          "type" : "object",
+          "properties" : {
+              "metrics" : {
+                  "type" : "string"
+              }
+          }
+      },
+      "data" : {
+          "type" : "array",
+          "minItems": 1,
+          "items" : {
+              "type" : "object",
+              "properties" :{
+                  "measurement" : {
+                      "type" : "string"
+                  },
+                  "fields" : {
+                      "type" : "object",
+                      "properties" : {
+                          "Status" : {
+                              "type" : "string"
+                          },
+                          "Priority" : {
+                              "type" : "string"
+                          },
+                          "Summary" : {
+                              "type" : "string"
+                          },
+                          "URL" : {
+                              "type" : "string"
+                          },
+                          "Existing_Defect" : {
+                              "type" : "number"
+                          }
+                      },
+                      "required" : ["Status", "Priority", "Summary", "URL", "Existing_Defect"]
+                  },
+                  "tags" : {
+                      "type" : "object",
+                      "properties" : {
+                          "Defect_ID" : {
+                              "type" : "string"
+                          },
+                          "Measured_Date" : {
+                              "type" : "string"
+                          }
+                      },
+                      "required" : ["Defect_ID", "Measured_Date"],
+                      "additionalProperties": false
+                  }
+              }
+          },
+          "required" : ["measurement", "fields", "tags"],
+          "additionalProperties": false
+      }
+  },
+  "required" : ["api_version", "metadata", "data"]
+}

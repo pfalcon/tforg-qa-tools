@@ -1,0 +1,52 @@
+{
+        "type" : "object",
+        "properties" : {
+            "api_version" : {
+                "type" : "string"
+            },
+            "metadata" : {
+                "type" : "object",
+                "properties" : {
+                    "metrics" : {
+                        "type" : "string"
+                    }
+                }
+            },
+            "data" : {
+                "type" : "array",
+                "minItems": 1,
+                "items" : {
+                    "type" : "object",
+                    "properties" :{
+                        "measurement" : {
+                            "type" : "string"
+                        },
+                        "fields" : {
+                            "type" : "object",
+                            "properties" : {
+                                "Issue_Status" : {
+                                    "type" : "string"
+                                },
+                                "Number_of_Defects" : {
+                                    "type" : "number"
+                                }
+                            },
+                            "required" : ["Issue_Status", "Number_of_Defects"]
+                        },
+                        "tags" : {
+                            "type" : "object",
+                            "properties" : {
+                                "Measured_Date" : {
+                                }
+                            },
+                            "required" : ["Measured_Date"],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required" : ["measurement", "fields", "tags"],
+                "additionalProperties": false
+            }
+        },
+        "required" : ["api_version", "metadata", "data"]
+}

@@ -1,0 +1,58 @@
+#======================================================================
+# Copyright (c) 2020, Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#======================================================================
+
+#======================================================================
+# FILE: docker-compose.yml
+#
+# DESCRIPTION:  This is a docker compose file for the deployment of all
+#  the components involved in the quality metrics collection setup. It
+#  brings up Grafana, InfluxDB and the broker component as a multi-
+#  container deployment.
+#======================================================================
+
+version: "2"
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana_container
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - metrics_network
+    volumes:
+      - grafana-volume:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+  influxdb:
+    image: influxdb
+    container_name: influxdb_container
+    restart: always
+    ports:
+      - 8086:8086
+    networks:
+      - metrics_network
+    volumes:
+      - influxdb-volume:/var/lib/influxdb
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - metrics_network
+    depends_on:
+      - influxdb
+    links:
+      -  influxdb:influx
+networks:
+  metrics_network:
+volumes:
+  grafana-volume:
+    external: true
+  influxdb-volume:
+    external: true
+

@@ -1,0 +1,67 @@
+{
+        "type" : "object",
+        "properties" : {
+            "api_version" : {
+                "type" : "string"
+            },
+            "metadata" : {
+                "type" : "object",
+                "properties" : {
+                    "metrics" : {
+                        "type" : "string"
+                    }
+                }
+            },
+            "data" : {
+                "type" : "array",
+                "minItems": 1,
+                "items" : {
+                    "type" : "object",
+                    "properties" :{
+                        "measurement" : {
+                            "type" : "string"
+                        },
+                        "fields" : {
+                            "type" : "object",
+                            "properties" : {
+                                "TotalDefects" : {
+                                    "type" : "number"
+                                },
+                                "MandatoryDefects" : {
+                                    "type" : "number"
+                                },
+                                "RequiredDefects" : {
+                                    "type" : "number"
+                                },
+                                "AdvisoryDefects" : {
+                                    "type" : "number"
+                                }
+                            },
+                            "required" : ["TotalDefects", "MandatoryDefects", "RequiredDefects", "AdvisoryDefects"]
+                        },
+                        "tags" : {
+                            "type" : "object",
+                            "properties" : {
+                                "BinMode" : {
+                                    "type" : "string"
+                                },
+                                "CommitID" : {
+                                    "type" : "string"
+                                },
+                                "CommitTitle" : {
+                                    "type" : "string"
+                                }
+                            },
+                            "required" : ["BinMode", "CommitID", "CommitTitle"],
+                            "additionalProperties": false
+                        },
+                        "time" : {
+                        }
+                    }
+                },
+                "required" : ["measurement", "fields", "tags", "time"],
+                "additionalProperties": false
+            }
+        },
+        "required" : ["api_version", "metadata", "data"]
+}

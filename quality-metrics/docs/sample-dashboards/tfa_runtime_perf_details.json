@@ -1,0 +1,1089 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "TFA_RunTime_Perf",
+        "enable": false,
+        "hide": false,
+        "iconColor": "#fce2de",
+        "limit": 100,
+        "name": "View Commit Details",
+        "query": "select CommitTitle, CommitID, TC_Name, CPU_Core, CacheFlush, Latency_EL3Entry_EL3Exit from \"[[Instrumentation]]\" WHERE ($timeFilter AND \"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^0/ AND \"Cluster_ID\" =~ /^0/) LIMIT 1000",
+        "showIn": 0,
+        "tagsColumn": "CommitID",
+        "textColumn": "CommitTitle",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 10,
+  "iteration": 1600199360656,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {
+        "Cluster ID: 0, CPU Core: 0": "#eab839",
+        "Cluster ID: 0, CPU Core: 1": "#eab839",
+        "Cluster ID: 1, CPU Core: 0": "#70dbed",
+        "Cluster ID: 1, CPU Core: 1": "#70dbed",
+        "Cluster ID: 1, CPU Core: 2": "#70dbed",
+        "Cluster ID: 1, CPU Core: 3": "#70dbed",
+        "Latency_CPUWakeup_EL3Exit for CPU Core 0": "#e24d42"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "TFA_RunTime_Perf",
+      "decimals": 3,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.3",
+      "pointradius": 3,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Cluster ID: 0, CPU Core: 0",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^0/ AND \"Cluster_ID\" =~ /^0/)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 0, CPU Core: 1",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^1/  AND \"Cluster_ID\" =~ /^0/)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 0, CPU Core: 2",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^2/  AND \"Cluster_ID\" =~ /^0/)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 0, CPU Core: 3",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\"  WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^3/  AND \"Cluster_ID\" =~ /^0/)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 1, CPU Core: 0",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^0/  AND \"Cluster_ID\" =~ /^1/)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 1, CPU Core: 1",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^1/ AND \"Cluster_ID\" =~ /^1/)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 1, CPU Core: 2",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^2/ AND \"Cluster_ID\" =~ /^1/)",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Cluster ID: 1, CPU Core: 3",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"$Latency\" FROM \"$Instrumentation\" WHERE  (\"TC_Name\" =~ /^$TestCase$/  AND \"CPU_Core\" =~ /^3/ AND \"Cluster_ID\" =~ /^1/)",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "[TC: $TestCase] $Latency Graph for $Instrumentation",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 3,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "columns": [],
+      "datasource": "TFA_RunTime_Perf",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 7,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 3,
+          "pattern": "/^Max*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "ns"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "",
+          "linkUrl": "${__cell:raw}",
+          "pattern": "Pull_Request_URL",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT CommitID, CommitTitle as \"Commit Title\", Cluster_ID as \"Cluster ID\", MAX($Latency) AS \"Max $Latency\"\nFROM \"[[Instrumentation]]\" WHERE (TC_Name =~ /^$TestCase$/ AND Cluster_ID =~ /^0/) GROUP BY CommitID",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT CommitID, CommitTitle as \"Commit Title\", Cluster_ID as \"Cluster ID\", MAX($Latency) AS \"Max $Latency\"\nFROM \"[[Instrumentation]]\" WHERE (TC_Name =~ /^$TestCase$/ AND Cluster_ID =~ /^1/) GROUP BY CommitID",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Details for selected instrumentation and test case ([[Instrumentation]], [[TestCase]])",
+      "transform": "table",
+      "type": "table-old"
+    },
+    {
+      "columns": [],
+      "datasource": "TFA_RunTime_Perf",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "110%",
+      "gridPos": {
+        "h": 3.7,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 4,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 3,
+          "pattern": "/^MAX*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "ns"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT  Cluster_ID, MAX(\"$Latency\") AS \"MAX($Latency)\" FROM \"[[Instrumentation]]\" WHERE (CommitID =~ /^$CommitID1$/ AND Cluster_ID =~ /^0/ AND \"TC_Name\" =~ /^$TestCase$/)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT  Cluster_ID, MAX(\"$Latency\") AS \"MAX($Latency)\" FROM \"[[Instrumentation]]\" WHERE (CommitID =~ /^$CommitID1$/ AND Cluster_ID =~ /^1/ AND \"TC_Name\" =~ /^$TestCase$/)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Max $Latency for Cluster IDs 0 and 1 for ($TestCase, $CommitID1)",
+      "transform": "table",
+      "transparent": true,
+      "type": "table-old"
+    },
+    {
+      "columns": [],
+      "datasource": "TFA_RunTime_Perf",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "110%",
+      "gridPos": {
+        "h": 3.7,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 5,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 3,
+          "pattern": "/^MAX*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "ns"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT Cluster_ID, MAX(\"$Latency\") AS \"MAX($Latency)\" FROM \"[[Instrumentation]]\" WHERE (CommitID =~ /^$CommitID2$/ AND Cluster_ID =~ /^0/ AND \"TC_Name\" =~ /^$TestCase$/)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT Cluster_ID, MAX(\"$Latency\") AS \"MAX($Latency)\" FROM \"[[Instrumentation]]\" WHERE (CommitID =~ /^$CommitID2$/ AND Cluster_ID =~ /^1/ AND \"TC_Name\" =~ /^$TestCase$/)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Max $Latency for Cluster IDs 0 and 1 for ($TestCase, $CommitID2)",
+      "transform": "table",
+      "transparent": true,
+      "type": "table-old"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [
+    "TFA_QUALITY_METRICS"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "juno-tftf+aarch32-rt32.instr-r2",
+          "value": "juno-tftf+aarch32-rt32.instr-r2"
+        },
+        "datasource": "TFA_RunTime_Perf",
+        "definition": "show measurements",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Instrumentation",
+        "multi": false,
+        "name": "Instrumentation",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "testrtinstrpsciversionparallel",
+          "value": "testrtinstrpsciversionparallel"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Test Case",
+        "multi": false,
+        "name": "TestCase",
+        "options": [
+          {
+            "selected": false,
+            "text": "testrtinstrcpuoffserial",
+            "value": "testrtinstrcpuoffserial"
+          },
+          {
+            "selected": false,
+            "text": "testrtinstrcpususpparallel",
+            "value": "testrtinstrcpususpparallel"
+          },
+          {
+            "selected": false,
+            "text": "testrtinstrcpususpserial",
+            "value": "testrtinstrcpususpserial"
+          },
+          {
+            "selected": true,
+            "text": "testrtinstrpsciversionparallel",
+            "value": "testrtinstrpsciversionparallel"
+          },
+          {
+            "selected": false,
+            "text": "testrtinstrsuspdeepparallel",
+            "value": "testrtinstrsuspdeepparallel"
+          },
+          {
+            "selected": false,
+            "text": "testrtinstrsuspdeepserial",
+            "value": "testrtinstrsuspdeepserial"
+          }
+        ],
+        "query": "testrtinstrcpuoffserial,testrtinstrcpususpparallel,testrtinstrcpususpserial,testrtinstrpsciversionparallel,testrtinstrsuspdeepparallel,testrtinstrsuspdeepserial",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "Latency_EL3Entry_EL3Exit",
+          "value": "Latency_EL3Entry_EL3Exit"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Latency",
+        "multi": false,
+        "name": "Latency",
+        "options": [
+          {
+            "selected": false,
+            "text": "CacheFlush",
+            "value": "CacheFlush"
+          },
+          {
+            "selected": false,
+            "text": "Latency_CPUWakeup_EL3Exit",
+            "value": "Latency_CPUWakeup_EL3Exit"
+          },
+          {
+            "selected": false,
+            "text": "Latency_EL3Entry_CPUPowerDown",
+            "value": "Latency_EL3Entry_CPUPowerDown"
+          },
+          {
+            "selected": true,
+            "text": "Latency_EL3Entry_EL3Exit",
+            "value": "Latency_EL3Entry_EL3Exit"
+          }
+        ],
+        "query": "CacheFlush,Latency_CPUWakeup_EL3Exit,Latency_EL3Entry_CPUPowerDown,Latency_EL3Entry_EL3Exit",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "e98d934aee",
+          "value": "e98d934aee"
+        },
+        "datasource": "TFA_RunTime_Perf",
+        "definition": "SHOW TAG VALUES WITH KEY=CommitID",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Commit ID 1",
+        "multi": false,
+        "name": "CommitID1",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY=CommitID",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "e98d934aee",
+          "value": "e98d934aee"
+        },
+        "datasource": "TFA_RunTime_Perf",
+        "definition": "SHOW TAG VALUES WITH KEY=CommitID",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Commit ID 2",
+        "multi": false,
+        "name": "CommitID2",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY=CommitID",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "TFA_RunTime_Perf_Details",
+  "uid": "qqVv390mz",
+  "version": 10
+}

@@ -1,0 +1,88 @@
+{
+        "type" : "object",
+        "properties" : {
+            "api_version" : {
+                "type" : "string"
+            },
+            "metadata" : {
+                "type" : "object",
+                "properties" : {
+                    "metrics" : {
+                        "type" : "string"
+                    },
+                    "data_producer" : {
+                        "type" : "string"
+                    },
+                    "git_info" : {
+                        "type" : "object",
+                        "properties" : {
+                           "commit_time" : {
+                               "type" : "string"
+                            },
+                            "commit_title" : {
+                                "type" : "string"
+                            },
+                           "commit_id" : {
+                               "type" : "string"
+                            },
+                            "commit_url" : {
+                                "type" : "string"
+                            },
+                            "branch" : {
+                                "type" : "string"
+                            },
+                            "gerrit_id" : {
+                                "type" : "string"
+                            }
+                        },
+                        "required" : ["commit_time", "commit_title", "commit_id", "commit_url", "branch"],
+                        "additionalProperties": false
+                    },
+                    "build_info" : {
+                        "type" : "object",
+                        "properties" : {
+                            "build_type" : {
+                                 "type" : "string"
+                            },
+                            "cmake_config" : {
+                                "type" : "string"
+                            },
+                            "compiler" : {
+                                "type" : "string"
+                            },
+                            "target" : {
+                                "type" : "string"
+                            }
+                        },
+                        "required" : ["build_type", "cmake_config", "compiler", "target"]
+                    }
+                },
+                "required" : ["metrics", "build_info", "git_info", "data_producer"],
+                "additionalProperties": false
+            },
+            "data" : {
+                "type" : "array",
+                "minItems" : 1,
+                "items" : {
+                    "type" : "object",
+                    "properties" : {
+                        "file" : {
+                            "type" : "string"
+                        },
+                        "bss" : {
+                            "type" : "number"
+                        },
+                        "data" : {
+                            "type" : "number"
+                        },
+                        "text" : {
+                            "type" : "number"
+                        }
+                    },
+                    "required" : ["file", "bss", "data", "text"],
+                    "additionalProperties": false
+                }
+            }
+        },
+        "required" : ["metadata", "data", "api_version"]
+}
