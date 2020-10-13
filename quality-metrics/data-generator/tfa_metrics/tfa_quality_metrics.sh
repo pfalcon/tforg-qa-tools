@@ -229,7 +229,7 @@ usage()
   printf "\t -h|--help            print help information\n"
   printf "\t --tag                user specified release tag\n"
   printf "\t --metric_type        [ runtime_instrumentation | image_size | coverity_misra ]*\n"
-  printf "\t --rt_instr           Path to file containing instrumentation data\n"
+  printf "\t --rt_instr_file      Path to file containing instrumentation data\n"
   printf "\t                      Required when metric_type is runtime_instrumentation\n"
   printf "\t --image_size_file    Path to file containing image size data\n"
   printf "\t                      Required when metric_type is image_size\n"
