@@ -30,9 +30,9 @@ Please make sure to update the in-source documentation as appropriate.
 
 At the moment the qa-tools comprises of various component developed in multiple languages. We follow the below coding guidelines and would request the same for any incoming contributions.
 
-Shell scripting guidelines - Follow Google's guidelines [Google Shell Scripting Guideline](https://google.github.io/styleguide/shellguide.html)
-C++ coding guidelines - Follow Google's guidelines [Google C++ Guideline](https://google.github.io/styleguide/cppguide.html)
-Python coding guidelines - Follow PEP 8 style guide [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/). We highly recommend the user of [Autopep8 tool](https://pypi.org/project/autopep8/) for the automatic formating of python code to be compliant with PEP 8 guidelines.
+- Shell scripting guidelines - Follow Google's guidelines [Google Shell Scripting Guideline](https://google.github.io/styleguide/shellguide.html)
+- C++ coding guidelines - Follow Google's guidelines [Google C++ Guideline](https://google.github.io/styleguide/cppguide.html)
+- Python coding guidelines - Follow PEP 8 style guide [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/). We highly recommend the use of [Autopep8 tool](https://pypi.org/project/autopep8/) for the automatic formating of python code to be compliant with PEP 8 guidelines.
 
 ## Change History
 
