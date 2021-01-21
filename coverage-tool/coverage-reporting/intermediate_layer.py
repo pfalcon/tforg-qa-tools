@@ -411,6 +411,9 @@ class PostProcessCC(object):
                     block_function_name), block_code, re.DOTALL | re.MULTILINE)
             if not function_signature_group:
                 continue  # Function does not have dwarf signature (sources)
+            if not block_function_name in function_list:
+                print("Warning:Function '{}' not found in function list!!!".format(block_function_name))
+                continue # Function not found in function list
             function_list[block_function_name]["sources"] = True
             block_function_source_file = remove_workspace(
                 function_signature_group[0], prefix)
