@@ -1,0 +1,49 @@
+<!--##############################################################################
+
+# Copyright (c) 2021, ARM Limited and Contributors. All rights reserved.
+
+#
+
+# SPDX-License-Identifier: BSD-3-Clause
+
+##############################################################################-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Report Pipeline Template">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="js/reporter.js"></script>
+</head>
+<body>
+    <div>
+        <div class="home-menu">
+            <a href="" target="_blank" id="linkLogo"><img id="imgLogo"></a>
+            <span style="padding:10px" id="spanTitle"></span>
+        </div>
+    </div>
+
+
+</div>
+    <div class="content-wrapper">
+        <div class="content" id="report-content">
+            <h2 id="report-name"></h2>
+        </div>
+    </div>
+    <script>
+(function() {
+    document.title = (typeof title === 'undefined') ? 'Report' : title;
+    document.getElementById("spanTitle").innerHTML = document.title
+    document.getElementById("linkLogo").href = (typeof logo_href === 'undefined') ? '' : logo_href;
+    if (typeof logo_img !== 'undefined') {
+        document.getElementById("imgLogo").src = logo_img;
+    }
+    else {
+            document.getElementById("imgLogo").style.display = "none";
+        }
+    report = generateReport("main_container", textReport);
+})();
+    </script>
+</body>
+</html>
