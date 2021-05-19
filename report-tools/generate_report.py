@@ -12,7 +12,13 @@ import yaml
 import argparse
 import os
 import logging
-import time
+import subprocess
+import sys
+import json
+from adaptors.sql.yaml_parser import YAMLParser
+import glob
+
+HTML_TEMPLATE = "html.tar.gz"
 
 
 class TCReport(object):
@@ -55,13 +61,13 @@ class TCReport(object):
             #               {report properties}
             try:
                 with open(report_file) as f:
-                    full_report = yaml.full_load(f)
+                    full_report = yaml.load(f)
                     self._report_name, \
                     self.report = list(full_report.items())[0]
-            except Exception as e:
+            except Exception as ex:
                 logging.exception(
                     f"Exception loading existing report '{report_file}'")
-                raise Exception(e)
+                raise ex
         else:
             self.report = {'metadata': metadata,
                            'test-environments': test_environments,
@@ -69,6 +75,7 @@ class TCReport(object):
                            'target': target,
                            'test-suites': test_suites
                            }
+        self.report_file = report_file
 
     def dump(self, file_name):
         """
@@ -181,7 +188,7 @@ class TCReport(object):
                         break
                     p = pattern.match(rest[0])
                     if p:
-                        id = p.groupdict()['id'].replace(" ", "_")
+                        id = re.sub("[ :]+", "_", p.groupdict()['id'])
                         status = p.groupdict()['status']
                         if not id:
                             print("Warning: missing 'id'")
@@ -230,6 +237,40 @@ class TCReport(object):
     def metadata(self, metadata):
         self.report['metadata'] = metadata
 
+    @property
+    def target(self):
+        return self.report['target']
+
+    @target.setter
+    def target(self, target):
+        self.report['target'] = target
+
+    def merge_into(self, other):
+        """
+        Merge one report object with this.
+
+        :param other: Report object to be merged to this
+        :return:
+        """
+        try:
+            if not self.report_name or self.report_name == "Not-defined":
+                self.report_name = other.report_name
+            if self.report_name != other.report_name:
+                logging.warning(
+                    f'Report name \'{other.report_name}\' does not match '
+                    f'original report name')
+                # Merge metadata where 'other' report will overwrite common key
+            # values
+            self.metadata.update(other.metadata)
+            self.target.update(other.target)
+            self.test_config['test-assets'].update(other.test_config['test'
+                                                                     '-assets'])
+            self.test_environments.update(other.test_environments)
+            self.test_suites.update(other.test_suites)
+        except Exception as ex:
+            logging.exception("Failed to merge reports")
+            raise ex
+            
 
 class KvDictAppendAction(argparse.Action):
     """
@@ -244,7 +285,8 @@ class KvDictAppendAction(argparse.Action):
                 (k, v) = value.split("=", 2)
             except ValueError as ex:
                 raise \
-                    argparse.ArgumentError(self, f"Could not parse argument '{values[0]}' as k=v format")
+                    argparse.ArgumentError(self,
+                                           f"Could not parse argument '{values[0]}' as k=v format")
             d[k] = v
         setattr(args, self.dest, d)
 
@@ -308,8 +350,20 @@ def process_lava_log(_report, _args):
     # Get the test results
     results = {}
     if _args.type == 'ptest-report':
+        results_pattern = None
+        suite = _args.suite or _args.test_suite_name
+        if suite == "optee-test":
+            results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (?P<id>.+ .+) " \
+                              r"- (?P<description>.+)"
+        elif suite == "kernel-selftest":
+            results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (" \
+                              r"?P<description>selftests): (?P<id>.+: .+)"
+        else:
+            logging.error(f"Suite type uknown or not defined:'{suite}'")
+            sys.exit(-1)
+
         results = TCReport.process_ptest_results(lava_log,
-                                                 results_pattern=_args.results_pattern)
+                                                 results_pattern=results_pattern)
     if _args.report_name:
         _report.report_name = _args.report_name
     _report.parse_fvp_model_version(lava_log)
@@ -321,13 +375,53 @@ def process_lava_log(_report, _args):
                            metadata=metadata)
 
 
+def merge_reports(reportObj, list_reports):
+    """
+    Function to merge a list of yaml report files into a report object
+
+    :param reportObj: Instance of an initial report object to merge the reports
+    :param list_reports: List of yaml report files or file patterns
+    :return: Updated report object
+    """
+    for report_pattern in list_reports:
+        for report_file in glob.glob(report_pattern):
+            to_merge = TCReport(report_file=report_file)
+            reportObj.merge_into(to_merge)
+    return reportObj
+
+
+def generate_html(report_obj, user_args):
+    """
+    Generate html output for the given report_file
+
+    :param report_obj: report object
+    :param user_args: Arguments from user
+    :return: Nothing
+    """
+    script_path = os.path.dirname(sys.argv[0])
+    report_file = user_args.report
+    try:
+        with open(script_path + "/html/js/reporter.js", "a") as write_file:
+            for key in args.html_output:
+                print(f'\nSetting html var "{key}"...')
+                write_file.write(f"\nlet {key}='{args.html_output[key]}'")
+            j = json.dumps({report_obj.report_name: report_obj.report},
+                           indent=4)
+            write_file.write(f"\nlet textReport=`\n{j}\n`")
+        subprocess.run(f'cp -f {report_file} {script_path}/html/report.yaml',
+                       shell=True)
+    except subprocess.CalledProcessError as ex:
+        logging.exception("Error at generating html")
+        raise ex
+
+
 if __name__ == '__main__':
     # Defining logger
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[
-            logging.FileHandler("log_parser_{}.log".format(time.time())),
+            logging.FileHandler("debug.log"),
             logging.StreamHandler()
         ])
     """
@@ -347,11 +441,10 @@ if __name__ == '__main__':
                                default='ptest-report')
     group_results.add_argument('--report-name', type=str, help='Report name',
                                default="")
-    group_results.add_argument('--results-pattern', type=str,
-                               help='Regex pattern to extract test results',
-                               default=r"(?P<status>(PASS|FAIL|SKIP)): ("
-                                       r"?P<id>.+ .+) - ( "
-                                       r"?P<description>.+)")
+    group_results.add_argument("--suite", required=False,
+                               default=None,
+                               help="Suite type. If not defined takes the "
+                                    "suite name value")
     test_env = parser.add_argument_group("Test environments")
     test_env.add_argument('--test-env-name', type=str,
                           help='Test environment type')
@@ -416,9 +509,31 @@ if __name__ == '__main__':
                         default=None,
                         help="File with key-value pairs lines i.e"
                              "key1=value1\nkey2=value2")
+                             
+    parser.add_argument("--list",
+                        nargs="+",
+                        default={},
+                        help="List of report files.")
+    parser.add_argument("--html-output",
+                        required=False,
+                        nargs="*",
+                        action=KvDictAppendAction,
+                        default={},
+                        metavar="KEY=VALUE",
+                        help="Set a number of key-value pairs i.e. key=value"
+                             "(do not put spaces before or after the = "
+                             "sign). "
+                             "If a value contains spaces, you should define "
+                             "it with double quotes: "
+                             "Valid keys: title, logo_img, logo_href.")
+    parser.add_argument("--sql-output",
+                        required=False,
+                        action="store_true",
+                        help='Sql output produced from the report file')
 
     args = parser.parse_args()
     report = None
+
     # Check if report exists (that can be overwritten) or is a new report
     if os.path.exists(args.report) and not args.new_report:
         report = TCReport(report_file=args.report)  # load existing report
@@ -451,6 +566,14 @@ if __name__ == '__main__':
         report.add_test_asset(args.test_asset_name,
                               merge_dicts(args.test_asset_values,
                                           import_env(args.test_asset_env)))
-
-    # Dump the report object as a yaml report
+    elif args.command == "merge-reports":
+        report = merge_reports(report, args.list)
     report.dump(args.report)
+    if args.html_output:
+        generate_html(report, args)
+
+    if args.sql_output:
+        yaml_obj = YAMLParser(args.report)
+        yaml_obj.create_table()
+        yaml_obj.parse_file()
+        yaml_obj.update_test_config_table()

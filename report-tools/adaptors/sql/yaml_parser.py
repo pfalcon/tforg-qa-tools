@@ -8,8 +8,7 @@ Class to parse .yaml file to generate a report.db
 """
 import sys
 import yaml
-import sqlite
-
+import adaptors.sql.sqlite as sqlite
 
 class YAMLParser:
     """
@@ -40,13 +39,13 @@ class YAMLParser:
         "result"
     ]
 
-    def __init__(self, file_name=sys.argv[1]):
+    def __init__(self, file_name=""):
         """Creates an instance for sqlite_obj and loads the contents of the yamlfile to be parsed """
 
         try:
             self.sqlite_obj = sqlite.Database("report.db")
             with open(file_name) as file:
-                self.contents = yaml.load(file, Loader=yaml.FullLoader)
+                self.contents = yaml.load(file)
                 self.root_string = [i for i in self.contents.keys()][0]
         except Exception as err:
             print(err)
@@ -84,11 +83,8 @@ class YAMLParser:
         """Parses the yaml file"""
 
         build_id = self.contents[self.root_string]['metadata']['CI_PIPELINE_ID']
-        # dependent on the generated yaml file. Code will be uncommented based
-        # on the yaml file
-        # self.contents[self.root_string]['metadata']['CI_COMMIT_TIMESTAMP']
-        date = ""
         for test_suite in self.contents[self.root_string]['test-suites'].keys():
+            date = self.contents[self.root_string]['test-suites'][test_suite]['metadata']['DATE']
             for test_case in self.contents[self.root_string]['test-suites'][test_suite]['test-results'].keys():
                 result = self.contents[self.root_string]['test-suites'][test_suite]['test-results'][test_case]["status"]
                 update_result_table_query = "INSERT INTO test_results VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')". \
@@ -102,8 +98,8 @@ class YAMLParser:
         target = self.contents[self.root_string]['target']['platform'] + \
             "_" + self.contents[self.root_string]['target']['version']
 
-        bitbake_version = "1.0"
-        yocto_version = "2.0"
+        bitbake_version = "UNAVAILABLE"
+        yocto_version = "UNAVAILABLE"
         update_table_query = "INSERT INTO test_configuration VALUES ('{0}', '{1}', '{2}', '{3}')".\
             format(build_id, target, bitbake_version, yocto_version)
         self.sqlite_obj.execute_query(update_table_query)
@@ -114,3 +110,4 @@ if __name__ == "__main__":
     yaml_obj.create_table()
     yaml_obj.parse_file()
     yaml_obj.update_test_config_table()
+ 
