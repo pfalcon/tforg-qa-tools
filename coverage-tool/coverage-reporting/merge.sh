@@ -13,7 +13,7 @@
 # files.
 #==============================================================================
 
-set -e
+set +x
 #################################################################
 # Function to manipulate json objects.
 # The json object properties can be accessed through "." separated
@@ -127,7 +127,7 @@ try:
 except Exception as ex:
     print(ex)
 EOT
-	cd -
+    cd -
 }
 
 #################################################################
@@ -161,7 +161,7 @@ get_file() {
     fname="$where.$extension" # Same filename as folder
     rm $where/$fname &>/dev/null || true
     wget -o error.log $_origin -O $where/$fname || (
-			cat error.log && exit -1)
+            cat error.log && exit -1)
     cloned_file="$(get_abs_path $where/$fname)"
   elif [ "$_type" = '"bundle"' ];then
     # Check file exists at origin, i.e. was unbundled before
@@ -170,10 +170,10 @@ get_file() {
         cloned_file="$(get_abs_path $where/$fname)"
     fi
   elif [ "$_type" = '"file"' ];then
-	if [[ "$_origin" = http* ]]; then
-		echo "$_origin looks like 'http' rather than 'file' please check..."
-		exit -1
-	fi
+    if [[ "$_origin" = http* ]]; then
+        echo "$_origin looks like 'http' rather than 'file' please check..."
+        exit -1
+    fi
     fname="$where.$extension" # Same filename as folder
     cp -f $_origin $where/$fname
     cloned_file="$(get_abs_path $where/$fname)"
@@ -395,8 +395,8 @@ if [ -z "$merge_input_json_file" ]; then
   exit -1
 fi
 if [ -z "$LOCAL_WORKSPACE" ] && [ $CLONE_SOURCES = true ]; then
-	echo "Need to define a local workspace folder to clone/copy sources!"
-	exit -1
+    echo "Need to define a local workspace folder to clone/copy sources!"
+    exit -1
 fi
 # Getting the script folder where other script files must reside, i.e
 # merge.py, clone_sources.py
@@ -409,7 +409,7 @@ param_cloned=""
 get_info_json_files
 merge_files
 if [ $CLONE_SOURCES = true ];then
-	clone_repos $output_json_file
+    clone_repos $output_json_file
 fi
 # Generate branch coverage report
 genhtml --branch-coverage $output_coverage_file \

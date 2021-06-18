@@ -129,16 +129,17 @@ if options.local_workspace is not None:
               info_files_to_merge[i]))
         info_lines = info_file.readlines()
         info_file.close()
-        common_prefix = os.path.normpath(
-            os.path.commonprefix([line[3:] for line in info_lines
-                                  if 'SF:' in line]))
         temp_file = 'temporary_' + str(i) + '.info'
+        parts = None
         with open(temp_file, "w+") as f:
             for line in info_lines:
-                cf = common_prefix
-                if os.path.basename(common_prefix) in file_groups[i]["locations"]:
-                    cf = os.path.dirname(common_prefix)
-                f.write(line.replace(cf, options.local_workspace))
+                if "SF" in line:
+                    for location in file_groups[i]["locations"]:
+                        if location in line:
+                            parts = line[3:].partition(location)
+                            line = line.replace(parts[0], options.local_workspace + "/")
+                            break
+                f.write(line)
         info_files_to_merge[i] = temp_file  # Replace info file to be merged
         i += 1
 
