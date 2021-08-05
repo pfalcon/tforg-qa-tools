@@ -359,7 +359,7 @@ def process_lava_log(_report, _args):
             results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (" \
                               r"?P<description>selftests): (?P<id>.+: .+)"
         elif suite == "ltp":
-            results_pattern = r"(?P<status>(PASS|FAIL|CONF)): (?P<id>.+)"
+            results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (?P<id>.+)"
         else:
             logging.error(f"Suite type uknown or not defined:'{suite}'")
             sys.exit(-1)
