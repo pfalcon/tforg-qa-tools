@@ -254,10 +254,10 @@ def get_function_line_numbers(source_file):
 
     :return: Dictionary with function name as key and line number as value
     """
-    function_lines = os_command(
-        "ctags -x --c-kinds=f {}".format(source_file)).split("\n")
+    command = "ctags -x --c-kinds=f {}".format(source_file)
     fln = {}
     try:
+        function_lines = os_command(command).split("\n")
         for line in function_lines:
             cols = line.split()
             if len(cols) < 3:
@@ -269,6 +269,10 @@ def get_function_line_numbers(source_file):
     except BaseException:
         logger.warning("Warning: Can't get all function line numbers from %s" %
                        source_file)
+    except Exception as ex:
+        logger.warning(f"Warning: Unknown error '{ex}' when executing command '{command}'")
+        return {}
+
     return fln
 
 
@@ -593,8 +597,8 @@ Input json configuration file format:
 OBJDUMP = None
 READELF = None
 FUNCTION_LINES_ENABLED = None
-SOURCE_PATTERN = (r'(?s)([a-zA-Z0-0_]+)?(?:\(\):\n)?(^/.+?):([0-9]+)'
-                  r'(?: \(.+?\))?\n(.+?)(?=\n/|\n$|([a-zA-Z0-0_]+\(\):))')
+SOURCE_PATTERN = (r'(?s)([a-zA-Z0-9_]+)?(?:\(\):\n)?(^/.+?):([0-9]+)'
+                  r'(?: \(.+?\))?\n(.+?)(?=\n/|\n$|([a-zA-Z0-9_]+\(\):))')
 
 
 def main():
