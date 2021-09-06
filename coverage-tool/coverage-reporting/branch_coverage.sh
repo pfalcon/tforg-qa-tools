@@ -129,7 +129,10 @@ if [ ! -f "$CONFIG_JSON" ]; then
     exit 1
 fi
 
-clear
+# clear may fail within a container-enviroment due to lack of
+# TERM enviroment, so ignore this and other possible errors
+clear || true
+
 echo "Generating intermediate layer file '$JSON_PATH'..."
 python3 intermediate_layer.py --config-json "$CONFIG_JSON" --local-workspace $LOCAL_WORKSPACE
 echo "Converting intermediate layer file to info file..."
