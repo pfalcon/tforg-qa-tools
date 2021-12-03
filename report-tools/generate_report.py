@@ -204,7 +204,7 @@ class TCReport(object):
                                            'metadata': metadata}
                 break
         if not stop_found:
-            logger.warning("End of ptest-runner not found")
+            logging.warning("End of ptest-runner not found")
         return results
 
     def parse_fvp_model_version(self, lava_log_string):
@@ -363,6 +363,8 @@ def process_lava_log(_report, _args):
         elif suite == "pm-qa":
             results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (?P<id>.+)" \
                               r"- (?P<description>.+)"
+        elif suite == "scmi":
+            results_pattern = r"(?P<status>(PASS|FAIL|SKIP)): (?P<id>.+)"
         else:
             logging.error(f"Suite type uknown or not defined:'{suite}'")
             sys.exit(-1)
