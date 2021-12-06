@@ -270,7 +270,7 @@ class TCReport(object):
         except Exception as ex:
             logging.exception("Failed to merge reports")
             raise ex
-            
+
 
 class KvDictAppendAction(argparse.Action):
     """
@@ -516,7 +516,7 @@ if __name__ == '__main__':
                         default=None,
                         help="File with key-value pairs lines i.e"
                              "key1=value1\nkey2=value2")
-                             
+
     parser.add_argument("--list",
                         nargs="+",
                         default={},
