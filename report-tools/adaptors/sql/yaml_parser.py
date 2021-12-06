@@ -110,4 +110,3 @@ if __name__ == "__main__":
     yaml_obj.create_table()
     yaml_obj.parse_file()
     yaml_obj.update_test_config_table()
- 
