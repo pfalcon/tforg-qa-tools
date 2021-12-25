@@ -13,7 +13,7 @@
 # files.
 #==============================================================================
 
-set +x
+set -x
 #################################################################
 # Function to manipulate json objects.
 # The json object properties can be accessed through "." separated
