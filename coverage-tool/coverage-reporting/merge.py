@@ -109,7 +109,7 @@ for file_name in options.add_file:
         with open(json_name) as json_file:
             json_data = json.load(json_file)
         locations = []
-        for source in json_data["configuration"]["sources"]:
+        for source in json_data["parameters"]["sources"]:
             locations.append(source["LOCATION"])
         file_group["locations"] = locations
     file_groups.append(file_group)
@@ -152,11 +152,11 @@ if len(options.json_file):
         json_file = options.json_file[j]
         with open(json_file) as f:
             data = json.load(f)
-        for source in data['configuration']['sources']:
+        for source in data['parameters']['sources']:
             if source not in json_merged_list:
                 json_merged_list.append(source)
         j += 1
-    json_merged = {'configuration': {'sources': json_merged_list}}
+    json_merged = {'parameters': {'sources': json_merged_list}}
     with open(options.output_json, 'w') as f:
         json.dump(json_merged, f)
 
