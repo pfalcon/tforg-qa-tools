@@ -411,6 +411,7 @@ merge_files
 if [ $CLONE_SOURCES = true ];then
     clone_repos $output_json_file
 fi
+cat $output_coverage_file
 # Generate branch coverage report
 genhtml --branch-coverage $output_coverage_file \
     --output-directory $LCOV_FOLDER
