@@ -409,6 +409,7 @@ param_cloned=""
 get_info_json_files
 merge_files
 if [ $CLONE_SOURCES = true ];then
+    cat $output_json_file; echo
     clone_repos $output_json_file
 fi
 cat $output_coverage_file
