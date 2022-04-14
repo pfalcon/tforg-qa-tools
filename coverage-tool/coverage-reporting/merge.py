@@ -51,7 +51,7 @@ requiredNamed.add_argument("-a", "--add-file",
 requiredNamed.add_argument("-o", "--output",
                            help="Name of the output info (merged) file.",
                            required=False)
-parser.add_argument("-j", "--json-file", action='append',
+parser.add_argument("-j", "--json-file", action='append', default=[],
                     help="Input json file to be merged.")
 parser.add_argument("-m", "--output-json",
                     help="Name of the output json (merged) file.")
