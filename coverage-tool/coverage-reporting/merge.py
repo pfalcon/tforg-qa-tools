@@ -63,8 +63,7 @@ parser.add_argument("--local-workspace", dest='local_workspace',
 options = parser.parse_args(sys.argv[1:])
 # At least two .info files are expected
 if len(options.add_file) < 2:
-    print('Error: too few input files.\n')
-    sys.exit(1)
+    print('Warning: too few input files.\n')
 # The same number of info and json files expected
 if options.json_file:
     if len(options.json_file) != len(options.add_file):
