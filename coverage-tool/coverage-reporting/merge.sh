@@ -412,6 +412,10 @@ if [ $CLONE_SOURCES = true ];then
     cat $output_json_file; echo
     clone_repos $output_json_file
 fi
+if [ -n "$LOCAL_WORKSPACE" ]; then
+    # Perform path translation specific to OpenCI tf-a-ci-gateway/tf-a-builder
+    sed -i "s|SF:/home/buildslave/workspace/[^/]*|SF:$LOCAL_WORKSPACE|" $output_coverage_file
+fi
 cat $output_coverage_file
 # Generate branch coverage report
 genhtml --branch-coverage $output_coverage_file \
